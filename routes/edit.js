@@ -3,8 +3,7 @@ var mustache = require('ringo/mustache');
 var sqlite = require('ctlr-sqlite');
 sqlite.connect('./mdms.db');
 
-module.exports = function (req) {
-  var id = req.env.servletRequest.getParameter('id');
+module.exports = function (req, id) {
   var template = getResource("./../templates/edit.html").content;
 
   if (!isNaN(id)) {
@@ -22,5 +21,7 @@ module.exports = function (req) {
     } else {
       return response.redirect('index');
     }
+  } else {
+    return response.redirect('index');
   }
 };

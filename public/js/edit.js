@@ -24,14 +24,14 @@
     if (title.length > 0 && content.length > 0) {
       $.ajax({
         type: 'POST',
-        url: 'save',
+        url: '/save',
         data: {
           id: id,
           title: title,
           content: content
         },
         success: function () {
-          window.location.replace("index");
+          window.location.replace("/");
           return false;
         },
         error: function (err) {

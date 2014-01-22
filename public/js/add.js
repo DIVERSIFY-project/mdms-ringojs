@@ -20,13 +20,13 @@
     if (title.length > 0 && content.length > 0) {
       $.ajax({
         type: 'POST',
-        url: 'save',
+        url: '/save',
         data: {
           title: title,
           content: editor.getValue()
         },
         success: function () {
-          window.location.replace("index");
+          window.location.replace("/");
           return false;
         },
         error: function (err) {
