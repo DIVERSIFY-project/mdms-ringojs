@@ -1,23 +1,20 @@
 #!/usr/bin/env ringo
 
 var routes = require("./routes.js");
-var response = require("ringo/jsgi/response");
+var {Application} = require('stick');
 
-// Minimalistic request dispatcher in lieu of a proper framework
-exports.app = function(request) {
-  var path = request.pathInfo.slice(1) || "index";
-  // 1. resolve against routes
-  if (routes[path] && typeof routes[path][path] === "function") {
-    return routes[path][path](request);
-  }
-  // 2. resolve against public folder
-  var resource = getResource("./public/" + path);
-  if (resource.exists()) {
-    return response.static(resource);
-  }
-  // 3. return 404 response
-  return routes['error404']['error404'](request);
-}
+var app = exports.app = new Application();
+app.configure('route', 'static', 'notfound');
+
+app.get('/', routes.index);
+app.get('/index', routes.index);
+app.get('/add', routes.add);
+app.get('/delete', routes.delete);
+app.get('/edit', routes.edit);
+app.post('/save', routes.save);
+
+app.static(module.resolve('./public'), 'index.html');
+app.notfound.template = module.resolve('./templates/404.html');
 
 // main script to start application
 if (require.main == module) {

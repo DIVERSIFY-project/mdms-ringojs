@@ -4,7 +4,7 @@ var markdown = require('ringo/markdown');
 var sqlite = require('ctlr-sqlite');
 sqlite.connect('./mdms.db');
 
-exports.index = function (req) {
+module.exports = function (req) {
   var template = getResource("./../templates/index.html").content;
 
   var results = sqlite.get_all('SELECT * FROM article;');

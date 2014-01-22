@@ -3,7 +3,7 @@ var mustache = require('ringo/mustache');
 var sqlite = require('ctlr-sqlite');
 sqlite.connect('./mdms.db');
 
-exports.edit = function (req) {
+module.exports = function (req) {
   var id = req.env.servletRequest.getParameter('id');
   var template = getResource("./../templates/edit.html").content;
 
