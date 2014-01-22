@@ -2,20 +2,29 @@
 
 var routes = require("./routes.js");
 var {Application} = require('stick');
+var sqlite = require('ctlr-sqlite');
 
+// create a new ringo/stick app
 var app = exports.app = new Application();
-app.configure('route', 'static', 'notfound', 'basicauth');
-//app.basicauth('/edit', 'user', 'D033E22AE348AEB5660FC2140AEC35850C4DA997');
 
+// add some middlewares to our Stick app
+app.configure('session', require('./middleware/authware'), 'params', 'route', 'static', 'notfound');
+
+// configure authware
+app.authware('/save', '/edit', '/delete', '/add');
+
+// configure routes
 app.get('/', routes.index);
 app.get('/index', routes.index);
-
 app.get('/add', routes.add);
 app.get('/delete/:id?', routes.delete);
 app.get('/edit/:id?', routes.edit);
+app.get('/signout', routes.signout);
+app.post('/auth', routes.auth);
 app.post('/save', routes.save);
-
+// configure static folder
 app.static(module.resolve('./public'), 'index.html');
+// configure default NotFound page
 app.notfound.template = module.resolve('./templates/404.html');
 
 // main script to start application

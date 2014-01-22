@@ -4,4 +4,5 @@ exports.edit     = require('./routes/edit.js');
 exports.delete   = require('./routes/delete.js');
 exports.save     = require('./routes/save.js');
 exports.add      = require('./routes/add.js');
-exports.error404 = require('./routes/error404.js');
+exports.auth     = require('./routes/auth.js');
+exports.signout  = require('./routes/signout.js');

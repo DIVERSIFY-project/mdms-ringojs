@@ -1,7 +1,6 @@
 var response = require('ringo/jsgi/response');
 var mustache = require('ringo/mustache');
 var sqlite = require('ctlr-sqlite');
-sqlite.connect('./mdms.db');
 
 module.exports = function (req) {
   var id      = req.env.servletRequest.getParameter('id'),
@@ -10,7 +9,9 @@ module.exports = function (req) {
   var template = getResource("./../templates/edit.html").content;
 
   if (title && content) {
+    sqlite.connect('./mdms.db');
     var results = sqlite.prepared_query("INSERT OR REPLACE INTO article VALUES(?, ?, ?, ?)", [id, title, content, new Date().getTime()]); // TODO SQL inject and stuff, but that's a POC who cares :D
+    sqlite.close();
     var article = results[0];
 
     if (article) {

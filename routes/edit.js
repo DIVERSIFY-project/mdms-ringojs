@@ -1,13 +1,14 @@
 var response = require('ringo/jsgi/response');
 var mustache = require('ringo/mustache');
 var sqlite = require('ctlr-sqlite');
-sqlite.connect('./mdms.db');
 
 module.exports = function (req, id) {
   var template = getResource("./../templates/edit.html").content;
 
   if (!isNaN(id)) {
+    sqlite.connect('./mdms.db');
     var results = sqlite.get_all("SELECT * FROM article WHERE id="+id);
+    sqlite.close();
     var article = results[0];
 
     if (article) {
