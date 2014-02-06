@@ -2,7 +2,6 @@
 
 var routes = require("./routes.js");
 var {Application} = require('stick');
-var sqlite = require('ctlr-sqlite');
 
 // create a new ringo/stick app
 var app = exports.app = new Application();
