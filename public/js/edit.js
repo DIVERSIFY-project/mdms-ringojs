@@ -3,7 +3,7 @@
     document.getElementById('out').innerHTML = marked(e.getValue());
   }
 
-  var editor = document.editor =CodeMirror.fromTextArea(document.getElementById('code'), {
+  var editor = document.editor = CodeMirror.fromTextArea(document.getElementById('code'), {
     mode: 'gfm',
     lineNumbers: true,
     matchBrackets: true,

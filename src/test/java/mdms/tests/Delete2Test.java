@@ -44,14 +44,13 @@ public class Delete2Test {
       driver.findElement(By.id("title")).sendKeys("titre");
       driver.findElement(By.id("save")).click();
       assertEquals("test", driver.findElement(By.xpath("//div[4]/p")).getText());
-      assertEquals("titre Delete Edit", driver.findElement(By.xpath("//div[4]/h2")).getText());
+      assertEquals("titre Delete Edit", driver.findElement(By.xpath("//div[4]/h2")).getText().replace("\n", " "));
       driver.findElement(By.xpath("(//a[contains(text(),'Edit')])[4]")).click();
       assertTrue(isElementPresent(By.id("save")));
       ((JavascriptExecutor) driver).executeScript("document.editor.setValue('')" );
       ((JavascriptExecutor) driver).executeScript("document.editor.setValue('foo')" );
-       driver.findElement(By.id("save")).click();
-      assertFalse(isElementPresent(By.id("save")));
-      assertEquals("footest", driver.findElement(By.xpath("//div[4]/p")).getText());
+      driver.findElement(By.id("save")).click();
+      assertEquals("foo", driver.findElement(By.xpath("//div[4]/p")).getText());
       driver.findElement(By.xpath("(//a[contains(text(),'Delete')])[4]")).click();
       driver.findElement(By.linkText("Sign out")).click();
   }
