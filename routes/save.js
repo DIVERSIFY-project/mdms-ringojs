@@ -1,29 +1,37 @@
 var response = require('ringo/jsgi/response');
-var mustache = require('ringo/mustache');
-var sqlite = require('ctlr-sqlite');
+var jedis = require('../jedis');
+var strings = require('ringo/utils/strings');
 
 module.exports = function (req) {
-  var id      = req.env.servletRequest.getParameter('id'),
-      title   = req.env.servletRequest.getParameter('title'),
-      content = req.env.servletRequest.getParameter('content');
-  var template = getResource("./../templates/edit.html").content;
+    var id      = req.env.servletRequest.getParameter('id'),
+        title   = req.env.servletRequest.getParameter('title'),
+        content = req.env.servletRequest.getParameter('content');
+    
+    if (title.length === 0 || content.length === 0) {
+        req.session.volatile = {
+            type: 'warning',
+            message: 'Article "'+id+'" does not exist or "title" and/or "content" were empty'
+        };
+        return response.ok();
 
-  if (title && content) {
-    sqlite.connect('./mdms.db');
-    var results = sqlite.prepared_query("INSERT OR REPLACE INTO article VALUES(?, ?, ?, ?)", [id, title, content, new Date().getTime()]); // TODO SQL inject and stuff, but that's a POC who cares :D
-    sqlite.close();
-    var article = results[0];
-
-    if (article) {
-      article.date = new Date(article.date).toUTCString();
-      return response.html(
-        mustache.to_html(template, {
-          title: "MdMS RingoJS",
-          article: article
-        })
-      );
     } else {
-      return response.redirect('index');
+        if (id && jedis.exists(id)) {
+            // update in db
+            var map = Packages.java.util.HashMap();
+            map.put('title', title);
+            map.put('content', content);
+            jedis.hmset(id, map);
+            return response.ok();
+            
+        } else {
+            // add in db
+            var map = Packages.java.util.HashMap();
+            id = strings.digest(new Date().getTime().toString(), 'sha1');
+            map.put('title', title);
+            map.put('content', content);
+            jedis.hmset(id, map);
+            jedis.sadd('articles', id);
+            return response.ok();
+        }
     }
-  }
 };

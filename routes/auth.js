@@ -6,7 +6,7 @@ module.exports = function (req) {
     var login = req.postParams.login;
     var password = strings.digest(req.postParams.password, 'sha1').toUpperCase();
     if (login && password) {
-        var result = jedis.get(login);
+        var result = jedis.get('user_'+login);
         if (result) {
             var user = { login: login, password: result };
             req.session.data.user = user;

@@ -17,7 +17,7 @@
 
   // register listener for save button
   $('#save').click(function () {
-    var id = parseInt($(this).attr('data-article'));
+    var id = $(this).attr('data-article');
     var title = $('#title').val();
     var content = editor.getValue();
 
