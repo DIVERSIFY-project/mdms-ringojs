@@ -10,7 +10,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class Delete2Test {
   private WebDriver driver;
@@ -44,6 +45,31 @@ public class Delete2Test {
     driver.findElement(By.id("save")).click();
     driver.findElement(By.xpath("(//a[contains(text(),'Delete')])[4]")).click();
     driver.findElement(By.linkText("Sign out")).click();
+
+      driver.findElement(By.name("login")).clear();
+      driver.findElement(By.name("login")).sendKeys("admin");
+      driver.findElement(By.name("password")).clear();
+      driver.findElement(By.name("password")).sendKeys("admin");
+      driver.findElement(By.cssSelector("button.btn.btn-success")).click();
+      driver.findElement(By.linkText("Add article")).click();
+      ((JavascriptExecutor) driver).executeScript("document.editor.setValue('')");
+      ((JavascriptExecutor) driver).executeScript("document.editor.setValue('test')");
+      driver.findElement(By.id("save")).click();
+      driver.findElement(By.cssSelector("button.close")).click();
+      driver.findElement(By.id("title")).clear();
+      driver.findElement(By.id("title")).sendKeys("titre");
+      driver.findElement(By.id("save")).click();
+      assertEquals("test", driver.findElement(By.xpath("//div[4]/p")).getText());
+      assertEquals("titre Delete Edit", driver.findElement(By.xpath("//div[4]/h2")).getText());
+      driver.findElement(By.xpath("(//a[contains(text(),'Edit')])[4]")).click();
+      assertTrue(isElementPresent(By.id("save")));
+      ((JavascriptExecutor) driver).executeScript("document.editor.setValue('')" );
+      ((JavascriptExecutor) driver).executeScript("document.editor.setValue('foo')" );
+       driver.findElement(By.id("save")).click();
+      assertFalse(isElementPresent(By.id("save")));
+      assertEquals("footest", driver.findElement(By.xpath("//div[4]/p")).getText());
+      driver.findElement(By.xpath("(//a[contains(text(),'Delete')])[4]")).click();
+      driver.findElement(By.linkText("Sign out")).click();
   }
 
   @After

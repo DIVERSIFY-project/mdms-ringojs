@@ -23,11 +23,12 @@ public class Identification1Test {
   @Test
   public void testIdentification1() throws Exception {
         driver.get(baseUrl);
-    driver.findElement(By.name("login")).clear();
-    driver.findElement(By.name("login")).sendKeys("foo");
-    driver.findElement(By.name("password")).clear();
-    driver.findElement(By.name("password")).sendKeys("bar");
-    driver.findElement(By.cssSelector("button.btn.btn-success")).click();
+      driver.findElement(By.name("login")).clear();
+      driver.findElement(By.name("login")).sendKeys("foo");
+      driver.findElement(By.name("password")).clear();
+      driver.findElement(By.name("password")).sendKeys("bar");
+      driver.findElement(By.cssSelector("button.btn.btn-success")).click();
+      assertFalse(isElementPresent(By.linkText("Sign out")));
   }
 
   @After

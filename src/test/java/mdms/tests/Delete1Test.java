@@ -23,8 +23,9 @@ public class Delete1Test {
     @Test
   public void testDelete1() throws Exception {
     driver.get(baseUrl);
-    driver.findElement(By.linkText("Delete")).click();
-    driver.findElement(By.cssSelector("button.close")).click();
+        driver.findElement(By.xpath("(//a[contains(text(),'Delete')])[3]")).click();
+        driver.findElement(By.cssSelector("button.close")).click();
+        assertTrue(isElementPresent(By.xpath("(//a[contains(text(),'Delete')])[3]")));
   }
 
   @After

@@ -23,8 +23,9 @@ public class Edit1Test {
   @Test
   public void testEdit1() throws Exception {
     driver.get(baseUrl);
-    driver.findElement(By.linkText("Edit")).click();
-    driver.findElement(By.cssSelector("button.close")).click();
+      driver.findElement(By.linkText("Edit")).click();
+      driver.findElement(By.cssSelector("button.close")).click();
+      assertFalse(isElementPresent(By.id("save")));
   }
 
   @After
