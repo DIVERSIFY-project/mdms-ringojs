@@ -1,11 +1,15 @@
 package mdms.tests;
 
-import java.util.concurrent.TimeUnit;
-import org.junit.*;
-import static org.junit.Assert.*;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class Delete1Test {
   private WebDriver driver;
@@ -23,9 +27,10 @@ public class Delete1Test {
     @Test
   public void testDelete1() throws Exception {
     driver.get(baseUrl);
-        driver.findElement(By.xpath("(//a[contains(text(),'Delete')])[3]")).click();
+        WebElement element = driver.findElement(By.cssSelector("div.article a.btn-xs.btn-danger.article-btn.pull-right"));
+        element.click();
         driver.findElement(By.cssSelector("button.close")).click();
-        assertTrue(isElementPresent(By.xpath("(//a[contains(text(),'Delete')])[3]")));
+        assertTrue(isElementPresent(By.cssSelector("div.article a.btn-xs.btn-danger.article-btn.pull-right")));
   }
 
   @After

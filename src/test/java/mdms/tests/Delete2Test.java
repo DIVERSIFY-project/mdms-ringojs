@@ -8,10 +8,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 public class Delete2Test {
   private WebDriver driver;
@@ -35,6 +36,13 @@ public class Delete2Test {
       driver.findElement(By.name("password")).clear();
       driver.findElement(By.name("password")).sendKeys("admin");
       driver.findElement(By.cssSelector("button.btn.btn-success")).click();
+
+      List<String> ids = new ArrayList<String>();
+      // list existing articles
+      for (WebElement element : driver.findElements(By.cssSelector("div.article"))) {
+          ids.add(element.getAttribute("id"));
+      }
+
       driver.findElement(By.linkText("Add article")).click();
       ((JavascriptExecutor) driver).executeScript("document.editor.setValue('')");
       ((JavascriptExecutor) driver).executeScript("document.editor.setValue('test')");
@@ -43,15 +51,34 @@ public class Delete2Test {
       driver.findElement(By.id("title")).clear();
       driver.findElement(By.id("title")).sendKeys("titre");
       driver.findElement(By.id("save")).click();
-      assertEquals("test", driver.findElement(By.xpath("//div[4]/p")).getText());
-      assertEquals("titre Delete Edit", driver.findElement(By.xpath("//div[4]/h2")).getText().replace("\n", " "));
-      driver.findElement(By.xpath("(//a[contains(text(),'Edit')])[4]")).click();
+
+      List<WebElement> articles = (new WebDriverWait(driver, 10))
+              .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("div.article")));
+
+      for (WebElement element : articles) {
+          if (!ids.contains(element.getAttribute("id"))){
+              assertEquals("test", element.findElement(By.cssSelector("p")).getText());
+
+              assertEquals("titre Delete Edit", element.findElement(By.cssSelector("h2")).getText().replace("\n", " "));
+              element.findElement(By.cssSelector("a.btn.btn-xs.btn-info.article-btn.pull-right")).click();
+              break;
+          }
+      }
       assertTrue(isElementPresent(By.id("save")));
       ((JavascriptExecutor) driver).executeScript("document.editor.setValue('')" );
       ((JavascriptExecutor) driver).executeScript("document.editor.setValue('foo')" );
       driver.findElement(By.id("save")).click();
-      assertEquals("foo", driver.findElement(By.xpath("//div[4]/p")).getText());
-      driver.findElement(By.xpath("(//a[contains(text(),'Delete')])[4]")).click();
+
+      articles = (new WebDriverWait(driver, 10))
+              .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("div.article")));
+
+      for (WebElement element : articles) {
+          if (!ids.contains(element.getAttribute("id"))){
+              assertEquals("foo", element.findElement(By.cssSelector("p")).getText());
+              element.findElement(By.cssSelector("a.btn-xs.btn-danger.article-btn.pull-right")).click();
+              break;
+          }
+      }
       driver.findElement(By.linkText("Sign out")).click();
   }
 
@@ -63,12 +90,6 @@ public class Delete2Test {
       fail(verificationErrorString);
     }
   }
-
-    public void waitForElementVisible(By element){
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        WebElement res = wait.until(ExpectedConditions.visibilityOf(driver.findElement(element)));
-
-    }
 
   private boolean isElementPresent(By by) {
     try {
