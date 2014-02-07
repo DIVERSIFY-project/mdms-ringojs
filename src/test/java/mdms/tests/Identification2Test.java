@@ -23,7 +23,7 @@ public class Identification2Test {
   public void setUp() throws Exception {
     driver = new FirefoxDriver();
     baseUrl = "http://localhost:8080/";
-    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
   }
 
   @Test
