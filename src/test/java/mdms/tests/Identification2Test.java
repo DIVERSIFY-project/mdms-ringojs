@@ -6,7 +6,10 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
@@ -35,7 +38,15 @@ public class Identification2Test {
       driver.findElement(By.name("password")).sendKeys("admin");
       driver.findElement(By.cssSelector("button.btn.btn-success")).click();
       driver.findElement(By.cssSelector("button.close")).click();
-      assertFalse(isElementPresent(By.cssSelector("button.btn.btn-success")));
+
+
+      try {
+      WebElement button = (new WebDriverWait(driver, 10))
+              .until(ExpectedConditions.presenceOfElementLocated(By.linkText("Sign out")));
+      } catch (Exception e) {
+          fail("Unable to find the Sign out button");
+      }
+
       driver.findElement(By.linkText("Sign out")).click();
       driver.findElement(By.cssSelector("button.close")).click();
       assertFalse(isElementPresent(By.linkText("Sign out")));
