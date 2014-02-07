@@ -51,25 +51,11 @@
 </div>
 
 <div class="container">
-    <div id="form-alert" class="alert alert-warning hide fade in">
-        <button type="button" class="close" aria-hidden="true">&times;</button>
-        <strong>Warning!</strong> You must give a title and some content in order to add an article :)
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="row">
-                <h4>Edit your content here in Markdown</h4>
-            </div>
-            <div id="in" class="row">
-                <form><textarea id="code">{{article.content}}</textarea></form>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="row">
-                <h4>... and it magically appears here!</h4>
-            </div>
-            <div id="out" class="row"></div>
-        </div>
+    <div class="alert alert-success fade in">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <p>Hi {{login}}! You are now signed in.<br/>You will be automatically redirected to index in a few seconds...</p>
+        <br/>
+        <small><a href="/">I do not want to wait</a> !</small>
     </div>
 </div>
 
@@ -77,6 +63,6 @@
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
 
 <script src="js/vendor/bootstrap.min.js"></script>
-<script src="js/add.js"></script>
+<script src="js/auth.js"></script>
 </body>
 </html>

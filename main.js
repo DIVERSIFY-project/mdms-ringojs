@@ -7,7 +7,7 @@ var {Application} = require('stick');
 var app = exports.app = new Application();
 
 // add some middlewares to our Stick app
-app.configure('session', require('./middleware/authware'), 'params', 'route', 'static', 'notfound');
+app.configure('cookies', 'session', require('./middleware/authware'), 'params', 'route', 'static', 'notfound');
 
 // configure authware
 app.authware('/save', '/edit', '/delete', '/add');

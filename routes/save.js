@@ -3,9 +3,10 @@ var jedis = require('../jedis');
 var strings = require('ringo/utils/strings');
 
 module.exports = function (req) {
-    var id      = req.env.servletRequest.getParameter('id'),
-        title   = req.env.servletRequest.getParameter('title'),
-        content = req.env.servletRequest.getParameter('content');
+    console.dir(req);
+    var id      = req.postParams['id'],
+        title   = req.postParams['title'],
+        content = req.postParams['content'];
     
     if (title.length === 0 || content.length === 0) {
         req.session.volatile = {
