@@ -31,10 +31,6 @@ module.exports = function (req) {
             );
         } else {
             // wrong login/password
-//            req.session.volatile = {
-//                type: 'danger',
-//                message: 'Wrong login and/or password'
-//            };
             var error = new ErrorBuilder({
                 type: 'danger',
                 message: 'Wrong login and/or password'

@@ -1,5 +1,6 @@
 var response = require('ringo/jsgi/response');
 var jedis = require('../jedis');
+var ErrorBuilder = require('../lib/ErrorBuilder');
 
 exports.middleware = function authware(next, app) {
 
@@ -16,10 +17,11 @@ exports.middleware = function authware(next, app) {
         } else {
             if (doNeedAuth(req.pathInfo)) {
                 console.log('Authware redirect: auth is needed to access %s', req.pathInfo);
-                req.session.volatile = {
+                var error = new ErrorBuilder({
                     type: 'warning',
                     message: 'You are not allowed to access '+req.pathInfo+' resource'
-                };
+                });
+                error.save(req.cookies['JSESSIONID']);
                 return response.redirect('/');
             } else {
                 return next(req);
