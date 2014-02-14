@@ -1,6 +1,7 @@
 var response = require('ringo/jsgi/response');
 var jedis = require('../jedis');
 var strings = require('ringo/utils/strings');
+var ErrorBuilder = require('../lib/ErrorBuilder');
 
 module.exports = function (req) {
     console.dir(req);
@@ -9,10 +10,11 @@ module.exports = function (req) {
         content = req.postParams['content'];
     
     if (title.length === 0 || content.length === 0) {
-        req.session.volatile = {
+        var error = new ErrorBuilder({
             type: 'warning',
             message: 'Article "'+id+'" does not exist or "title" and/or "content" were empty'
-        };
+        });
+        error.save(req.cookies['JSESSIONID']);
         return response.ok();
 
     } else {

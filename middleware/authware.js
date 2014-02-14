@@ -37,9 +37,9 @@ exports.middleware = function authware(next, app) {
     }
 
     function isConnected(req) {
-        var sessID = req.cookies['SESSID'];
-        if (sessID && jedis.exists(sessID)) {
-            req.session.data.user = { login: jedis.get(sessID) };
+        var authID = req.cookies['AUTHID'];
+        if (authID && jedis.exists(authID)) {
+            req.session.data.user = { login: jedis.get(authID) };
             return true;
         } else {
             req.session.data.user = null;

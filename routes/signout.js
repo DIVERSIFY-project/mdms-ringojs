@@ -1,12 +1,14 @@
 var response = require('ringo/jsgi/response');
 var jedis = require('../jedis');
+var ErrorBuilder = require('../lib/ErrorBuilder');
 
 module.exports = function signout(req) {
     req.session.data.user = null;
-    req.session.volatile = {
+    var error = new ErrorBuilder({
         type: 'success',
         message: 'You are now signed out.'
-    };
-    jedis['del(java.lang.String[])'](req.cookies['SESSID']);
+    });
+    error.save(req.cookies['JSESSIONID']);
+    jedis['del(java.lang.String[])'](req.cookies['AUTHID']);
     return response.redirect('/');
 }

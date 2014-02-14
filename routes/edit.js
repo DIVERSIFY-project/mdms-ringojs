@@ -1,6 +1,7 @@
 var response = require('ringo/jsgi/response');
 var mustache = require('ringo/mustache');
 var jedis = require('../jedis');
+var ErrorBuilder = require('../lib/ErrorBuilder');
 
 module.exports = function (req, id) {
     var template = getResource("./../templates/edit.html").content;
@@ -26,10 +27,11 @@ module.exports = function (req, id) {
         }
 
     } else {
-        req.session.volatile = {
+        var error = new ErrorBuilder({
             type: 'warning',
             message: 'Article "'+id+'" does not exist'
-        };
+        });
+        error.save(req.cookies['JSESSIONID']);
         return response.redirect('/');
     }
 };

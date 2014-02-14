@@ -2,6 +2,7 @@ var response = require('ringo/jsgi/response');
 var mustache = require('ringo/mustache');
 var strings = require('ringo/utils/strings');
 var jedis = require('../jedis');
+var ErrorBuilder = require('../lib/ErrorBuilder');
 
 module.exports = function (req) {
     var login = req.postParams.login;
@@ -15,13 +16,13 @@ module.exports = function (req) {
             // save user in session server-side
             req.session.data.user = user;
             // save sessionID in db with TTL 60*30 (30 minutes)
-            var sessID = strings.digest(login+42+result+new Date().getTime(), 'sha1')+'.sessID';
-            jedis.set(sessID, login);
-            jedis.expire(sessID, 60*30);
+            var authID = strings.digest(login+42+result+new Date().getTime(), 'sha1')+'.authID';
+            jedis.set(authID, login);
+            jedis.expire(authID, 60*30);
             
             var template = getResource("./../templates/auth.html").content;
             return response.addHeaders({
-                "Set-Cookie": "SESSID="+sessID
+                "Set-Cookie": "AUTHID="+authID
             }).html(
                 mustache.to_html(template, {
                     title: "MdMS RingoJS",
@@ -30,10 +31,15 @@ module.exports = function (req) {
             );
         } else {
             // wrong login/password
-            req.session.volatile = {
+//            req.session.volatile = {
+//                type: 'danger',
+//                message: 'Wrong login and/or password'
+//            };
+            var error = new ErrorBuilder({
                 type: 'danger',
                 message: 'Wrong login and/or password'
-            };
+            });
+            error.save(req.cookies['JSESSIONID']);
             return response.redirect('/');
         }
     } else {
