@@ -1,5 +1,4 @@
 var jedis = require('../jedis');
-var strings = require('ringo/utils/strings');
 
 exports.middleware = function sessionware(next) {
 

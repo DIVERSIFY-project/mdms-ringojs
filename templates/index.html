@@ -55,12 +55,12 @@
     </div>
 
     <div class="container">
-        {{#volatile}}
-        <div class="alert alert-{{volatile.type}} fade in">
+        {{#error}}
+        <div class="alert alert-{{error.type}} fade in">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{volatile.message}}
+            {{error.message}}
         </div>
-        {{/volatile}}
+        {{/error}}
         <div class="row">
             {{#articles}}
             <div class="col-md-4 article" id="{{id}}">

@@ -10,7 +10,9 @@ module.exports = function (req) {
     
     if (login && password) {
         var result = jedis.get('user_'+login);
-        if (result) {
+        console.log('result', result);
+        console.log('password', password);
+        if (result && result === password) {
             // user login/password are good
             var user = { login: login, password: result };
             // save user in session server-side

@@ -13,7 +13,6 @@ app.configure(
     'cookies',
     'session',
     require('./middleware/sessionware'),
-    require('./middleware/errorware'),
     require('./middleware/authware'),
     'params',
     'route',

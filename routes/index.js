@@ -18,13 +18,24 @@ module.exports = function (req) {
             content: markdown.process(artList.get(1))
         });
     }
+
+    var errorID = 'error_'+req.cookies['JSESSIONID'];
+    var errorObj = null;
+    if (jedis.exists(errorID)) {
+        var rawError = jedis.hmget(errorID, 'type', 'message');
+        errorObj = {
+            type: rawError.get(0),
+            message: rawError.get(1)
+        }
+        jedis['del(java.lang.String[])'](errorID);
+    }
     
     return response.html(
         mustache.to_html(template, {
             title: "MdMS RingoJS",
             articles: articles,
             user: (req.session.data.user) ? req.session.data.user.login : null,
-            volatile: req.session.volatile
+            error: errorObj
         })
     );
 };

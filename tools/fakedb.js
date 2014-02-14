@@ -5,7 +5,7 @@ var map0 = Packages.java.util.HashMap();
 var date = new Date();
 var id0 = strings.digest(date.getTime().toString(), 'sha1');
 map0.put('title', 'Article 1');
-map0.put('content', '__foo__  \nbar  \n[Google.fr](http://google.fr)');
+map0.put('content', '__foo__  \nbar  \n[Google.fr](http://google.fr)  \n![Potato picture](http://cheznectarine.c.h.pic.centerblog.net/o/de3c5ec8.jpg)');
 jedis.hmset(id0, map0);
 
 var map1 = Packages.java.util.HashMap();
