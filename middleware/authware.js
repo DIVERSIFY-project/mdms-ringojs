@@ -21,7 +21,7 @@ exports.middleware = function authware(next, app) {
                     type: 'warning',
                     message: 'You are not allowed to access '+req.pathInfo+' resource'
                 });
-                error.save(req.cookies['JSESSIONID']);
+                error.save(req.cookies['SESSID']);
                 return response.redirect('/');
             } else {
                 return next(req);

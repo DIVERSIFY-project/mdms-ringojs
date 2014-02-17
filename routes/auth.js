@@ -35,7 +35,7 @@ module.exports = function (req) {
                 type: 'danger',
                 message: 'Wrong login and/or password'
             });
-            error.save(req.cookies['JSESSIONID']);
+            error.save(req.cookies['SESSID']);
             return response.redirect('/');
         }
     } else {

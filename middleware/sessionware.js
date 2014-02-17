@@ -3,7 +3,7 @@ var jedis = require('../jedis');
 exports.middleware = function sessionware(next) {
 
     return function(req) {
-        var sessID = req.cookies['JSESSIONID'];
+        var sessID = req.cookies['SESSID'];
         if (jedis.exists(sessID)) {
             // there is already a session for this ID, renew TTL
             jedis.expire(sessID, 60*30);

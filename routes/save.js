@@ -13,7 +13,7 @@ module.exports = function (req) {
             type: 'warning',
             message: 'Article "'+id+'" does not exist or "title" and/or "content" were empty'
         });
-        error.save(req.cookies['JSESSIONID']);
+        error.save(req.cookies['SESSID']);
         return response.ok();
 
     } else {

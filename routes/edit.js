@@ -31,7 +31,7 @@ module.exports = function (req, id) {
             type: 'warning',
             message: 'Article "'+id+'" does not exist'
         });
-        error.save(req.cookies['JSESSIONID']);
+        error.save(req.cookies['SESSID']);
         return response.redirect('/');
     }
 };

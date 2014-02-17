@@ -19,7 +19,7 @@ module.exports = function (req) {
         });
     }
 
-    var errorID = 'error_'+req.cookies['JSESSIONID'];
+    var errorID = 'error_'+req.cookies['SESSID'];
     var errorObj = null;
     if (jedis.exists(errorID)) {
         var rawError = jedis.hmget(errorID, 'type', 'message');

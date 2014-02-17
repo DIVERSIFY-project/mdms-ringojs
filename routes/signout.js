@@ -8,7 +8,7 @@ module.exports = function signout(req) {
         type: 'success',
         message: 'You are now signed out.'
     });
-    error.save(req.cookies['JSESSIONID']);
+    error.save(req.cookies['SESSID']);
     jedis['del(java.lang.String[])'](req.cookies['AUTHID']);
     return response.redirect('/');
 }

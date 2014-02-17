@@ -8,7 +8,7 @@ module.exports = function (req, id) {
             type: 'success',
             message: 'Article "'+id+'" deleted successfully'
         });
-        error.save(req.cookies['JSESSIONID']);
+        error.save(req.cookies['SESSID']);
         
         jedis.srem('articles', id);
         jedis['del(java.lang.String[])'](id);
@@ -18,7 +18,7 @@ module.exports = function (req, id) {
             type: 'warning',
             message: 'Article "'+id+'" does not exist (can\'t delete something that does not exist :O)'
         });
-        error.save(req.cookies['JSESSIONID']);
+        error.save(req.cookies['SESSID']);
     }
 
     return response.redirect('/');
