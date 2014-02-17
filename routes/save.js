@@ -4,7 +4,6 @@ var strings = require('ringo/utils/strings');
 var ErrorBuilder = require('../lib/ErrorBuilder');
 
 module.exports = function (req) {
-    console.dir(req);
     var id      = req.postParams['id'],
         title   = req.postParams['title'],
         content = req.postParams['content'];
