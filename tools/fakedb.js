@@ -4,22 +4,22 @@ var strings = require('ringo/utils/strings');
 var map0 = Packages.java.util.HashMap();
 var date = new Date();
 var id0 = strings.digest(date.getTime().toString(), 'sha1');
-map0.put('title', 'Article 1');
-map0.put('content', '__foo__  \nbar  \n[Google.fr](http://google.fr)  \n![Potato picture](http://cheznectarine.c.h.pic.centerblog.net/o/de3c5ec8.jpg)');
+map0.put('title', 'Software Diversity');
+map0.put('content', 'As part of our project, we synthesize and observe multiple forms of software diversity. For example, we have vizualized the diversity in commit flows among projects hosted in [Github](https://github.com/) using [circos](http://circos.ca/).\n![commits diversity](https://raw.github.com/bbaudry/GitWorks/master/images/ace.png "Diversity in the commit flow in Github")');
 jedis.hmset(id0, map0);
 
 var map1 = Packages.java.util.HashMap();
 date = new Date();
 var id1 = strings.digest(date.getTime().toString(), 'sha1');
-map1.put('title', 'Article 2');
-map1.put('content', '*potato* lorem ipsum dolor\n\n  * sit\n  * amet');
+map1.put('title', 'Diversify Video');
+map1.put('content', 'This Video demonstrate the MDMS use case for the [DIVERSIFY project](http://diversify-project.eu/).\n\nThe goal is to showcase that using automatically diversified source code in various environments does not impact the **external visible behavior** of the system.');
 jedis.hmset(id1, map1);
 
 var map2 = Packages.java.util.HashMap();
 date = new Date();
 var id2 = strings.digest(date.getTime().toString(), 'sha1');
-map2.put('title', 'Article 3');
-map2.put('content', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ac tellus ut elit gravida eleifend. Cras id diam nec sem pretium eleifend. Praesent rutrum rutrum porttitor. Etiam commodo vel risus et dapibus. Cras id scelerisque tellus, non auctor sem. Quisque et urna bibendum, condimentum dolor et, condimentum neque. Vivamus iaculis massa faucibus scelerisque mollis. Fusce lacinia nisl velit, quis rutrum velit suscipit facilisis. Suspendisse ultrices dignissim libero, lobortis dictum tellus suscipit scelerisque.');
+map2.put('title', 'Experimental app');
+map2.put('content', 'This editor of MD posts is developed in the context of the [DIVERSIFY project](http://diversify-project.eu/), which explores the synthetic diversification of web servers.');
 jedis.hmset(id2, map2);
 
 jedis.sadd('articles', id0, id1, id2);
