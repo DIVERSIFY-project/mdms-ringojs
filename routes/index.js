@@ -1,10 +1,14 @@
 var response = require('ringo/jsgi/response');
-var mustache = require('ringo/mustache');
-var markdown = require('ringo/markdown');
+var { Reinhardt } = require('reinhardt');
+var markdown = require('ringo-markdown');
 var jedis = require('../jedis');
 
+var reinhardt = new Reinhardt({
+  loader: module.resolve('../templates/')
+});
+
 module.exports = function (req) {
-    var template = getResource("./../templates/index.html").content;
+    //var template = getResource("./../templates/index.html").content;
 
     var articlesIDs = jedis.smembers('articles');
     var it = articlesIDs.iterator();
@@ -30,12 +34,10 @@ module.exports = function (req) {
         jedis['del(java.lang.String[])'](errorID);
     }
     
-    return response.html(
-        mustache.to_html(template, {
-            title: "MdMS RingoJS",
-            articles: articles,
-            user: (req.session.data.user) ? req.session.data.user.login : null,
-            error: errorObj
-        })
-    );
+    return reinhardt.renderResponse('index.html', {
+        title: "MdMS RingoJS",
+        articles: articles,
+        user: (req.session.data.user) ? req.session.data.user.login : null,
+        error: errorObj
+    });
 };

@@ -1,85 +1,41 @@
-<!DOCTYPE html>
-<html class="no-js">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>MdMS - Diversify</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+{% extends "layout.html" %}
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/main.css">
+{% block navbar %}
+  {% if user %}
+  <ul class="nav navbar-nav">
+      <li class="active"><a href="#">{{user}}</a></li>
+  </ul>
+  <div class="navbar-right">
+      <a href="add" class="btn btn-success navbar-btn">Add article</a>
+      <a href="signout" class="btn btn-warning navbar-btn">Sign out</a>
+  </div>
+  Connected as {{user}}
+  {% else %}
+  <form id="signin-form" class="navbar-form navbar-right" role="form" action="auth" method="post">
+      <div class="form-group">
+          <input name="login" type="text" placeholder="Login" class="form-control">
+      </div>
+      <div class="form-group">
+          <input name="password" type="password" placeholder="Password" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-success">Sign in</button>
+  </form>
+  {% endif %}
+{% endblock %}
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <script>window.html5 || document.write('<script src="js/vendor/html5shiv.js"><\/script>')</script>
-    <![endif]-->
-</head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle menu</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">{{title}}</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                {{#user}}
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">{{user}}</a></li>
-                </ul>
-                <div class="navbar-right">
-                    <a href="add" class="btn btn-success navbar-btn">Add article</a>
-                    <a href="signout" class="btn btn-warning navbar-btn">Sign out</a>
-                </div>
-                Connected as {{user}}
-                {{/user}}
-                {{^user}}
-                <form id="signin-form" class="navbar-form navbar-right" role="form" action="auth" method="post">
-                    <div class="form-group">
-                        <input name="login" type="text" placeholder="Login" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <input name="password" type="password" placeholder="Password" class="form-control">
-                    </div>
-                    <button type="submit" class="btn btn-success">Sign in</button>
-                </form>
-                {{/user}}
-            </div>
-        </div>
-    </div>
+{% block content %}
+  {% for article in articles %}
+  <div class="col-md-4 article" id="{{ article.id }}">
+      <h2>
+          {{ article.title }}
+          <a href="delete/{{ article.id }}" class="btn btn-xs btn-danger article-btn pull-right">Delete</a>
+          <a href="edit/{{ article.id }}" class="btn btn-xs btn-info article-btn pull-right">Edit</a>
+      </h2>
+      <div>{{ article.content | safe }}</div>
+  </div>
+  {% endfor %}
+{% endblock %}
 
-    <div class="container">
-        {{#error}}
-        <div class="alert alert-{{error.type}} fade in">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{error.message}}
-        </div>
-        {{/error}}
-        <div class="row">
-            {{#articles}}
-            <div class="col-md-4 article" id="{{id}}">
-                <h2>
-                    {{title}}
-                    <a href="delete/{{id}}" class="btn btn-xs btn-danger article-btn pull-right">Delete</a>
-                    <a href="edit/{{id}}" class="btn btn-xs btn-info article-btn pull-right">Edit</a>
-                </h2>
-                {{{content}}}
-            </div>
-            {{/articles}}
-        </div>
-    </div>
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
-
-    <script src="js/vendor/bootstrap.min.js"></script>
-    <script src="js/vendor/cookies.min.js"></script>
-    <script src="js/index.js"></script>
-</body>
-</html>
+{% block scripts %}
+  <script src="/js/index.js"></script>
+{% endblock %}

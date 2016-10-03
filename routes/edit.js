@@ -1,11 +1,13 @@
 var response = require('ringo/jsgi/response');
-var mustache = require('ringo/mustache');
+var { Reinhardt } = require('reinhardt');
 var jedis = require('../jedis');
 var ErrorBuilder = require('../lib/ErrorBuilder');
 
-module.exports = function (req, id) {
-    var template = getResource("./../templates/edit.html").content;
+var reinhardt = new Reinhardt({
+  loader: module.resolve('../templates/')
+});
 
+module.exports = function (req, id) {
     if (jedis.exists(id)) {
         var artList = jedis.hmget(id, 'title', 'content');
         var article = {
@@ -16,12 +18,10 @@ module.exports = function (req, id) {
 
         if (article) {
             article.date = new Date(article.date).toUTCString();
-            return response.html(
-                mustache.to_html(template, {
-                    title: "MdMS RingoJS",
-                    article: article
-                })
-            );
+            return reinhardt.renderResponse('edit.html', {
+              title: "MdMS RingoJS",
+              article: article
+            });
         } else {
             return response.redirect('index');
         }

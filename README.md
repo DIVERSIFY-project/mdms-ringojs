@@ -3,17 +3,34 @@ mdms-ringojs
 
 Markdown CMS using RingoJS server-side and @jbt markdown-editor client-side
 
-## Usage
+## Setup your env
+### Install Ringo's package manager:
+First of all, install RingoJS packages manager (equivalent to `npm` but for RingoJS):
 ```sh
-ringo-admin install ringo/stick
-ringo tools/fakedb.js
+ringo-admin install grob/rp
+```
+
+### Install MdMS dependencies:
+Then install all the dependencies MdMS needs.  
+To do so, use RingoJS's packages manager `rp` that you just installed:
+```sh
+cd /path/to/mdms
+rp install
+```
+
+### Run a Redis database (using docker):
+Now **MdMS** needs a *redis* db in order to run.  
+You can easily start one using [Docker](https://hub.docker.com/_/redis/).
+```sh
+docker run -p 6379:6379 -d redis:alpine
+```
+> The database configuration is available in `/path/to/mdms/config.json`
+
+## Start MdMS
+```sh
 ringo main.js
 ```
 
-`ringo tools/fakedb.js` loads some fake articles into the database for you =)  
-`ringo main.js` starts the server on port `8080`
-
-> You will also **need a Redis server** up and running.  
-> Connection informations can be found in `config.json`
-
 You can now open your browser and go to [localhost:8080](http://localhost:8080)
+
+> NB: if you want to add some dummy data to the DB you can run `ringo tool/fakedb.js`

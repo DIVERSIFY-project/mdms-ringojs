@@ -1,0 +1,32 @@
+{
+  "name": "mdms",
+  "version": "1.0.0",
+  "description": "MdMS is a Markdown-based CMS running on RingoJS",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "reinhardt": "0.4",
+    "ringo-markdown": "0.11",
+    "stick": "0.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DIVERSIFY-project/mdms-ringojs.git"
+  },
+  "keywords": [
+    "mdms",
+    "ringojs",
+    "markdown",
+    "cms",
+    "diversify"
+  ],
+  "author": "Maxime Tricoire <max.tricoire@gmail.com>",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/DIVERSIFY-project/mdms-ringojs/issues"
+  },
+  "homepage": "https://github.com/DIVERSIFY-project/mdms-ringojs#readme"
+}
