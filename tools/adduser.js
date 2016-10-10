@@ -1,7 +1,7 @@
 var system = require('system');
 var shell = require('ringo/shell');
 var strings = require('ringo/utils/strings');
-var jedis = require('../jedis');
+var jedis = require('../lib/jedis');
 
 if (system.args.length === 1) {
     var username = shell.readln('Username: ');

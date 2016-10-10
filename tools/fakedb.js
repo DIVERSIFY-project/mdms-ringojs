@@ -1,4 +1,4 @@
-var jedis = require('../jedis');
+var jedis = require('../lib/jedis');
 
 var map0 = Packages.java.util.HashMap();
 var id0 = 'article_0';

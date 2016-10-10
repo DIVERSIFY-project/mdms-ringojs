@@ -2,7 +2,7 @@
   "name": "mdms",
   "version": "1.0.0",
   "description": "MdMS is a Markdown-based CMS running on RingoJS",
-  "main": "main.js",
+  "main": "server.js",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

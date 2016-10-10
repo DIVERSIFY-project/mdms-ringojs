@@ -28,9 +28,10 @@ docker run -p 6379:6379 -d redis:alpine
 
 ## Start MdMS
 ```sh
-ringo main.js
+ringo server.js --port=9090 mdmsInstanceName
 ```
+*The `mdmsInstanceName` is used by the WebSocket client as an ID*  
 
-You can now open your browser and go to [localhost:8080](http://localhost:8080)
+You can now open your browser and go to [localhost:9090](http://localhost:8080)
 
 > NB: if you want to add some dummy data to the DB you can run `ringo tool/fakedb.js`
